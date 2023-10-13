@@ -4,7 +4,7 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class CalculatorModel implements CalculatorModelInterface {
-	Stack<Double> memory = new Stack<Double>();
+	public Stack<Double> memory = new Stack<Double>();
 	double accu;
 	
 	public void add() {
@@ -48,7 +48,7 @@ public class CalculatorModel implements CalculatorModelInterface {
 		}
 	}
 
-	public double drop() {
+	public void drop() {
 		memory.pop();		
 	}
 
