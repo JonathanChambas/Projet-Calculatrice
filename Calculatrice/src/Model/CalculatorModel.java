@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class CalculatorModel implements CalculatorModelInterface {
@@ -9,7 +10,7 @@ public class CalculatorModel implements CalculatorModelInterface {
 	public void add() {
 		double x = memory.pop();
 		double y = memory.pop();
-		memory.push(x+y);
+		memory.push(x+y); // faire avec accu toutes les méthodes
 	}
 
 	public void subtract() {
@@ -31,19 +32,23 @@ public class CalculatorModel implements CalculatorModelInterface {
 	}
 
 	public void opposite() {
-		// TODO Auto-generated method stub
-		
+		accu = -accu;		
 	}
 
 	public void push() {
 		memory.push(accu);		
 	}
 
-	public void pop() {
-		
+	public double pop() {
+		try {
+			return memory.peek();
+		}
+		catch (EmptyStackException e) { ;
+		return Double.NaN;
+		}
 	}
 
-	public void drop() {
+	public double drop() {
 		memory.pop();		
 	}
 

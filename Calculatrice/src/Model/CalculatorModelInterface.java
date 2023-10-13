@@ -8,8 +8,8 @@ public interface CalculatorModelInterface {
 	public void divide();
 	public void opposite();
 	public void push();
-	public void pop();
-	public void drop();	
+	public double pop();
+	public double drop();	
 	public void swap();
 	public void clear();
 	
