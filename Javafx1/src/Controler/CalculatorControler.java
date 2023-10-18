@@ -12,4 +12,6 @@ public class CalculatorControler implements CalculatorControlerInterface {
 		if (s=='*') {calculatorModel.multiply();}
 		if (s=='/') {calculatorModel.divide();}
 	}
+	
+	String accu;
 }

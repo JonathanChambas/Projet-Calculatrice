@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class CalculatorModel implements CalculatorModelInterface {
 	Stack<Double> memory = new Stack<Double>();
-	double accu;
+	String accu;
 	
 	public void add() {
 		double x = memory.pop();

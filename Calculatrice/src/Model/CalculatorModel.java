@@ -64,5 +64,5 @@ public class CalculatorModel implements CalculatorModelInterface {
 			memory.pop();
 		}
 	}
-	
+
 }

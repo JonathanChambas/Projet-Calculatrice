@@ -6,4 +6,6 @@ public interface CalculatorGUIInterface {
 	
 	public String affiche();
 	public void change(List<Double> stackData);
+
+	String accu;
 }

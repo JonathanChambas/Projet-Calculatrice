@@ -3,11 +3,13 @@ package View;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBase;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
 public class Buttons {
 		
+	BorderPane borderPane = new BorderPane();
 
 	Button btAdd = new Button("+");
 	Button btSubstract = new Button("-");
@@ -24,8 +26,9 @@ public class Buttons {
 			gp.add(b, c, l);
 	}
 		}
-	String accu;
+	borderPane.setBottom(gp);
 	
+	String accu;
 	}
 }
 
