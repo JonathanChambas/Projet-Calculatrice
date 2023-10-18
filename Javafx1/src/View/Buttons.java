@@ -18,9 +18,14 @@ public class Buttons {
 
 	//clavier
 	GridPane gp = new GridPane();
-	for (int i=0; i<3; i++) {
-		Button b = new Button();
-		gp.add(b, i, 1);
+	for (int l=0; l<3; l++) { //parcours des lignes
+		for (int c=0; c<3; c++) { // parcours des colonnes
+			Button b = new Button();
+			gp.add(b, c, l);
 	}
+		}
+	String accu;
+	
 	}
+}
 
