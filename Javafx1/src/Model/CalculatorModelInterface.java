@@ -13,6 +13,4 @@ public interface CalculatorModelInterface {
 	public void swap();
 	public void clear();
 	
-	
-	String accu;
 }
