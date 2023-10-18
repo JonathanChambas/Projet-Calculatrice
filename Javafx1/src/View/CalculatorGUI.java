@@ -1,5 +1,5 @@
 package View;
 
-public class CalculatorGUI {
-
+public class CalculatorGUI extends javafx.scene.Scene {
+	
 }

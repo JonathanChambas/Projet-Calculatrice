@@ -1,6 +1,6 @@
 package Controler;
 
-import Model.CalculatorModel;
+import model.CalculatorModel;
 
 public class CalculatorControler implements CalculatorControlerInterface {
 
