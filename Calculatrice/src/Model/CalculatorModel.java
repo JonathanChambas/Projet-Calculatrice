@@ -13,7 +13,7 @@ public class CalculatorModel implements CalculatorModelInterface {
 		memory.push(x+y); // faire avec accu toutes les méthodes
 	}
 
-	public void subtract() {
+	public void substract() {
 		double x = memory.pop();
 		double y = memory.pop();
 		memory.push(x-y);		
