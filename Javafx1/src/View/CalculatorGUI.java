@@ -25,8 +25,7 @@ public class CalculatorGUI extends Application {
         double h = 47;
 
 		Button bouton1 = new Button("1");
-		
-		bouton1.relocate(80,186);
+		bouton1.relocate(80,128);
 		bouton1.setPrefSize(l, h);
 		
 		Button bouton2 = new Button("2");
