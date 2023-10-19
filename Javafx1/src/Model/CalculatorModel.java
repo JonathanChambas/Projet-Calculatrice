@@ -5,7 +5,7 @@ import java.util.Stack;
 
 public class CalculatorModel implements CalculatorModelInterface {
 	Stack<Double> memory = new Stack<Double>();
-	String accu;
+	Double accu;
 	
 	public void add() {
 		double x = memory.pop();
@@ -48,7 +48,7 @@ public class CalculatorModel implements CalculatorModelInterface {
 		}
 	}
 
-	public double drop() {
+	public void drop() {
 		memory.pop();		
 	}
 
@@ -63,6 +63,12 @@ public class CalculatorModel implements CalculatorModelInterface {
 		while (memory.empty() == false) {
 			memory.pop();
 		}
+	}
+
+	@Override
+	public void subtract() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
