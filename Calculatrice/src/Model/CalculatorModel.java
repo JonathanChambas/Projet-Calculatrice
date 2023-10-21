@@ -65,4 +65,10 @@ public class CalculatorModel implements CalculatorModelInterface {
 		}
 	}
 
+	@Override
+	public void subtract() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
