@@ -1,19 +1,38 @@
 package Model;
 
+import View.CalculatorGUI;
 import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class CalculatorModel implements CalculatorModelInterface {
-	Stack<Double> memory = new Stack<Double>();
-	Double accu;
-	
+	public Stack<Double> memory = new Stack<Double>();
+	private String accu;
+
+	public String getAccu() {
+		return accu;
+	}
+
+	public void setAccu(String s) {
+		if (accu == null) {
+			accu = s;
+		}
+		else if (accu.substring(0,1).equals("0")) {
+			accu = s;
+		}
+		else if (accu.contains(".") && s.equals(".")) {}			
+		else {
+			accu = accu + s;
+		}
+		CalculatorGUI.changer_valeur(accu);
+	}
+
 	public void add() {
 		double x = memory.pop();
 		double y = memory.pop();
 		memory.push(x+y); // faire avec accu toutes les méthodes
 	}
 
-	public void substract() {
+	public void subtract() {
 		double x = memory.pop();
 		double y = memory.pop();
 		memory.push(x-y);		
@@ -32,11 +51,25 @@ public class CalculatorModel implements CalculatorModelInterface {
 	}
 
 	public void opposite() {
-		accu = -accu;		
+		if (accu.substring(0,1).equals("-")) {
+			accu = accu.substring(1, accu.length());
+		}
+		else {
+			accu = "-" + accu;
+		}
+		CalculatorGUI.changer_valeur(accu);
 	}
 
 	public void push() {
-		memory.push(accu);		
+		if (accu.equals("+")) {
+			add();
+			accu = null;
+			setAccu(memory.pop().toString());
+		}
+		else {
+			memory.push(Double.valueOf(accu));
+			accu = "0";
+		}
 	}
 
 	public double pop() {
@@ -65,10 +98,16 @@ public class CalculatorModel implements CalculatorModelInterface {
 		}
 	}
 
-	@Override
-	public void subtract() {
-		// TODO Auto-generated method stub
-		
+	public void del() {
+		if (accu.length() != 0) {
+			accu = accu.substring(0,accu.length()-1);
+			CalculatorGUI.changer_valeur(accu);
+		}
 	}
-	
+
+	public void supprimer() {
+		accu = accu.substring(accu.length());
+		CalculatorGUI.changer_valeur(accu);
+	}
+
 }
