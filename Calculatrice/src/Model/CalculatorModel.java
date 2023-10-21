@@ -48,7 +48,7 @@ public class CalculatorModel implements CalculatorModelInterface {
 		}
 	}
 
-	public double drop() {
+	public void drop() {
 		memory.pop();		
 	}
 

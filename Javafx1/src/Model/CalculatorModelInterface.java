@@ -3,7 +3,7 @@ package Model;
 public interface CalculatorModelInterface {
 
 	public void add();
-	public void subtract();
+	public void substract();
 	public void multiply();
 	public void divide();
 	public void opposite();
@@ -12,5 +12,5 @@ public interface CalculatorModelInterface {
 	public void drop();	
 	public void swap();
 	public void clear();
-	
+
 }
