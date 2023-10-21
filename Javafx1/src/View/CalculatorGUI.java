@@ -91,7 +91,7 @@ public class CalculatorGUI extends Application {
 
 		Button bouton11 = new Button("Enter");
 		bouton11.relocate(171,356);
-		bouton11.setPrefSize(l, h);
+		bouton11.setPrefSize(2*l+10, h);
 		bouton11.setOnAction(e -> {changer_affichage();});
 
 		Button bouton12 = new Button(".");
