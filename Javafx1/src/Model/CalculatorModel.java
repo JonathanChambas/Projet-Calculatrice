@@ -5,12 +5,16 @@ import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class CalculatorModel implements CalculatorModelInterface {
-	public Stack<Double> memory = new Stack<Double>();
+	private Stack<Double> memory = new Stack<Double>();
 	private String accu;
 	String var;
 
 	public String getAccu() {
 		return accu;
+	}
+	
+	public String getMemory() {
+		return memory.toString();
 	}
 
 	public void setAccu(String s) {
