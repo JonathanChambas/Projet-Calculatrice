@@ -27,6 +27,7 @@ public class CalculatorGUI extends Application {
 	public void start(Stage st) {
 		Pane root = new Pane();
 		Scene scene = new Scene(root, 500, 500);
+		root.setStyle("-fx-background-color:#ecf6fb;");
 		st.setTitle("Calculatrice");
 		st.setScene(scene);
 		st.setOnCloseRequest(event -> {
