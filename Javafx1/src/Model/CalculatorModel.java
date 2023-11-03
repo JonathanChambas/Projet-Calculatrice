@@ -1,14 +1,22 @@
 package Model;
 
 import View.CalculatorGUI;
+import javafx.scene.control.Label;
+
 import java.util.EmptyStackException;
 import java.util.Stack;
 
 public class CalculatorModel implements CalculatorModelInterface {
-	private Stack<Double> memory = new Stack<Double>();
-	private String accu;
-	String var;
+    private Stack<Double> memory = new Stack<Double>();
+    private String accu;
+    String var;
+    private CalculatorGUI CG; // Add a reference to CalculatorGUI
 
+    // Constructor that takes a CalculatorGUI instance
+    public CalculatorModel(CalculatorGUI calculatorGUI) {
+        this.CG = calculatorGUI;
+    }
+	
 	public String getAccu() {
 		return accu;
 	}
@@ -18,29 +26,28 @@ public class CalculatorModel implements CalculatorModelInterface {
 	}
 
 	public void setAccu(String s) {
-		if (accu == null) {
-			accu = s;
-		}
-		else if (accu.substring(0,1).equals("0")) {
-			accu = s;
-		}
-		else if (accu.contains(".") && s.equals(".")) {}			
-		else {
-			accu = accu + s;
-		}
-		CalculatorGUI.changer_valeur(accu);
-	}
+        if (accu == null) {
+            accu = s;
+        } else if (accu.substring(0, 1).equals("0")) {
+            accu = s;
+        } else if (accu.contains(".") && s.equals(".")) {
+        } else {
+            accu = accu + s;
+        }
+        CG.changer_valeur(accu); // Use the instance to call the method
+    }
+
 
 	public void add() {
 		double x = memory.pop();
 		double y = memory.pop();
-		memory.push(x+y); // faire avec accu toutes les méthodes
+		memory.push(x+y); 
 	}
 
 	public void substract() {
 		double x = memory.pop();
 		double y = memory.pop();
-		memory.push(y-x);		
+		memory.push(x-y);		
 	}
 
 	public void multiply() {
@@ -51,8 +58,13 @@ public class CalculatorModel implements CalculatorModelInterface {
 
 	public void divide() {
 		double x = memory.pop();
-		double y = memory.pop();
-		memory.push(y/x);		
+		if (x == 0) {
+			memory.push(x);
+		}
+		else {
+			double y = memory.pop();
+			memory.push(y/x);
+		}
 	}
 
 	public void opposite() {
@@ -62,7 +74,7 @@ public class CalculatorModel implements CalculatorModelInterface {
 		else {
 			accu = "-" + accu;
 		}
-		CalculatorGUI.changer_valeur(accu);
+		CG.changer_valeur(accu);
 	}
 
 	public void push() {
@@ -102,6 +114,9 @@ public class CalculatorModel implements CalculatorModelInterface {
 			}
 			setAccu(var);
 		}
+		else if (accu.equals(".")) {
+			memory.push(0.);
+		}
 		else {
 			memory.push(Double.valueOf(accu));
 			accu = "0";
@@ -119,14 +134,24 @@ public class CalculatorModel implements CalculatorModelInterface {
 	}
 
 	public void drop() {
-		memory.pop();		
+		try {
+			memory.pop();
+		}
+		catch (EmptyStackException e) {}	
 	}
 
 	public void swap() {
-		double x = memory.pop();
-		double y = memory.pop();
-		memory.push(x);
-		memory.push(y);
+		if (memory.empty() == false) {
+			double x = memory.pop();
+			if (memory.empty() == false) {
+				double y = memory.pop();
+				memory.push(x);
+				memory.push(y);
+			}
+			else {
+				memory.push(x);
+			}
+		}
 	}
 
 	public void clear() {
@@ -136,15 +161,18 @@ public class CalculatorModel implements CalculatorModelInterface {
 	}
 
 	public void del() {
-		if (accu.length() != 0) {
+		if (accu.length() > 1) {
 			accu = accu.substring(0,accu.length()-1);
-			CalculatorGUI.changer_valeur(accu);
 		}
+		else if (accu.length() == 1) {
+			accu = "0";
+		}
+		CG.changer_valeur(accu);
 	}
 
 	public void supprimer() {
 		accu = "0";
-		CalculatorGUI.changer_valeur(accu);
+		CG.changer_valeur(accu);
 	}
 
 }
