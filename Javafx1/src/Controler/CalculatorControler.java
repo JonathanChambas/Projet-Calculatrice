@@ -41,6 +41,7 @@ public class CalculatorControler implements CalculatorControlerInterface {
 		bouton21.setOnAction(e -> {CM.swap();});		
 		bouton22.setOnAction(e -> {CM.drop();});		
 		bouton23.setOnAction(e -> {CG.star();});
+		
     }
     
     public double change(String accu) {

@@ -8,160 +8,180 @@ import java.util.Stack;
 public class CalculatorModel implements CalculatorModelInterface {
     private Stack<Double> memory = new Stack<Double>();
     private String accu;
-    String var;
     private CalculatorGUI CG; 
 
     public CalculatorModel(CalculatorGUI calculatorGUI) {
         this.CG = calculatorGUI;
     }
 	
-	public String getAccu() {
+	public String getAccu() { //Création d'un getter pour obtenir la valeur de accu
 		return accu;
 	}
 	
-	public String getMemory() {
-		return memory.toString();
+	public String getMemory() { //Création d'un getter pour obtenir la pile memory 
+		return memory.toString(); //Pour pouvoir l'afficher, on la passe en String
 	}
 
-	public void setAccu(String s) {
-        if (accu == null || accu.substring(0, 1).equals("0")) {
-            accu = s;
+	public void setAccu(String s) { //Création d'un setter pour modifier accu
+        if (accu == null || accu.substring(0, 1).equals("0") ) { //Si accu est null ou vaut 0 
+            accu = s; //On remplace accu par la valeur demandé
         } 
-        else if (accu.contains(".") && s.equals(".")) { }
-        else {
-            accu = accu + s;
+        else if (accu.contains(".") && s.equals(".")) { } //Si accu possède déjà un point et qu'on souhaite rajouter un . dans 
+        //l'expression de accu, on ne fait rien
+        else { 
+            accu = accu + s; //Sinon on ajoute la valeur demandé à la suite de accu
         }
-        CG.changer_valeur(accu); 
+        CG.changer_valeur(accu); //Dès qu'accu est modifié, on change l'affichage de la calculatrice
     }
 
 
 	public void add() {
-		if (memory.empty() == false) {
-			double x = memory.pop();
-			if (memory.empty() == false) {
-				double y = memory.pop();
-				memory.push(x+y);
+		if (memory.empty() == false) { //Si la pile n'est pas vide
+			double x = drop(); //On récupère le dernier élément de la pile
+			if (memory.empty() == false) { //Si elle n'est toujours pas vide après avoir retiré le dernier élément de la pile
+				double y = drop(); //On en récupère un deuxième
+				memory.push(x+y); //Et on met dans la pile le résultat
 			}
-			else { 
-				memory.push(x);
+			else { //Si la pile ne possède qu'un élément
+				memory.push(x); //On le remet dans la pile
 			}
 		} 
+		else { //Si la pile ne possède pas d'élément
+			accu = "0"; //accu redevient égale à 0 au lieu d'être égal à l'opérateur
+			CG.changer_valeur("Pas de valeur dans la pile"); //On affiche sur la calculatrice que la pile ne contient pas de valeur
+		}
 	}
 
 	public void substract() {
-		if (memory.empty() == false) {
-			double x = memory.pop();
+		if (memory.empty() == false) { //De la même manière que pour l'addition
+			double x = drop();
 			if (memory.empty() == false) {
-				double y = memory.pop();
-				memory.push(x-y);
+				double y = drop();
+				memory.push(x-y); //On effectue la soustraction si la pile contient deux éléments
 			}
 			else { 
-				memory.push(x);
+				memory.push(x); //Si elle n'en contient qu'un, on le remet dans la pile
 			}
 		} 	
+		else {
+			accu = "0";; //Sinon, accu redevient égale à 0
+			CG.changer_valeur("Pas de valeur dans la pile"); //Et on affiche qu'il n'y a pas de valeur dans la pile
+		}
 	}
 
-	public void multiply() {
+	public void multiply() { //De la même manière pour la multiplication
 		if (memory.empty() == false) {
-			double x = memory.pop();
+			double x = drop();
 			if (memory.empty() == false) {
-				double y = memory.pop();
+				double y = drop();
 				memory.push(x*y);
 			}
 			else { 
 				memory.push(x);
 			}
-		} 		
+		} 	
+		else {
+			accu = "0";
+			CG.changer_valeur("Pas de valeur dans la pile");
+		}
 	}
 
-	public void divide() {
+	public void divide() { //De la même manière pour la division
 		if (memory.empty() == false) {
-			double x = memory.pop();
-			if (x == 0) {
-			memory.push(x);
+			double x = drop();
+			if (x == 0) { //Sauf si le premier élément qu'on retire de la pile est égale à 0
+				memory.push(x); //On remet le 0 dans la pile
+				accu = "0"; //accu redevient égale à 0 au lieu d'être égal à l'opérateur
+				CG.changer_valeur("Division par 0 interdite"); //On écrit sur la calculatrice que la division par 0 n'est pas possible
 			}
 			else if (memory.empty() == false) {
-				double y = memory.pop();
+				double y = drop();
 				memory.push(y/x);
 			}
 			else {
 				memory.push(x);
 			}
 		}
-	}
-
-	public void opposite() {
-		if (accu.substring(0,1).equals("-")) {
-			accu = accu.substring(1, accu.length());
-		}
 		else {
-			accu = "-" + accu;
+			accu = "0";
+			CG.changer_valeur("Pas de valeur dans la pile");
 		}
-		CG.changer_valeur(accu);
 	}
 
-	public void push() {
-		if (accu.matches(".*[-+*/].*") && !accu.matches(".*\\d.*") ) {
-			accu = "" + pop();
+	public void opposite() { 
+		if (accu.substring(0,1).equals("-")) { //On regarde si le premier élément du String accu est un "-"
+			accu = accu.substring(1, accu.length()); //Si c'est le cas, on garde tous les éléments qu compose le String accu sauf le "-"
 		}
-		else if (accu.equals(".")) {
-			memory.push(0.);
+		else { //Sinon
+			accu = "-" + accu; //On ajoute un "-" devant accu
 		}
-		else {
-			memory.push(Double.valueOf(accu));
-		}
-		accu = "0";		
+		CG.changer_valeur(accu); //On affiche la nouvelle valeur de accu
 	}
 
-	public double pop() {
+	public void push() { 
+		if (accu.matches(".*[-+*/].*") && !accu.matches(".*\\d.*") ) { //Si accu contient des opérateurs dans son expression
+			accu = "" + pop(); //Accu devient égal au dernier élément de la pile (c'est-à-dire le résultat des opérations effectuées)
+		}
+		else if (accu.equals(".")) { //Si accu ne contient qu'un .
+			memory.push(0.); //On push 0 dans la pile
+		}
+		else { //Sinon
+			memory.push(Double.valueOf(accu)); //On push la valeur de accu dans la pile une fois convertie en double
+		}
+		accu = "0";	//accu redevient égal à 0
+	}
+
+	public double pop() { //Méthode permettant d'obtenir le dernier élément de la pile sans le retirer
 		try {
-			return memory.peek();
+			return memory.peek(); //On essaye d'afficher le dernier élément de la pile
 		}
-		catch (EmptyStackException e) { ;
-		return Double.NaN;
+		catch (EmptyStackException e) { ; //Sinon on catch l'exception
+		return Double.NaN; //Et on retourne le double NaN
 		}
 	}
 
-	public void drop() {
+	public double drop() { //Méthode permettant d'enlever le dernier élément de la pile
 		try {
-			memory.pop();
+			return memory.pop(); //On essaye d'enlever et de retourner le dernier élément de la pile
 		}
-		catch (EmptyStackException e) {}	
+		catch (EmptyStackException e) {
+			return Double.NaN;//Sinon l'exception est catch et on renvoie le double NaN
+		} 
 	}
 
-	public void swap() {
-		if (memory.empty() == false) {
-			double x = memory.pop();
-			if (memory.empty() == false) {
-				double y = memory.pop();
-				memory.push(x);
-				memory.push(y);
+	public void swap() { //Méthode permettant d'intervertir la position des deux derniers éléments de la pile
+		if (memory.empty() == false) { //Si la pile n'est pas vide
+			double x = drop(); //x prend la valeur du dernier élément
+			if (memory.empty() == false) { //Si après avoir retiré un élément, la pile n'est toujours pas vide
+				double y = drop(); //y prend la valeur du dernier élément
+				memory.push(x); //On push d'abord x dans la pile
+				memory.push(y); //Puis ensuite y
 			}
 			else {
-				memory.push(x);
+				memory.push(x); //Si la pile ne contient qu'un élément, il est remis dans la pile
 			}
 		}
 	}
 
-	public void clear() {
-		while (memory.empty() == false) {
-			memory.pop();
+	public void clear() { //Méthode permettant de vider la pile
+		while (memory.empty() == false) { //Tant que la pile n'est pas vide
+			drop(); //On retire le dernier élément de la pile
 		}
 	}
 
-	public void del() {
-		if (accu.length() > 1) {
-			accu = accu.substring(0,accu.length()-1);
+	public void del() { //Méthode permettant de supprimer un élément de la chaine de caractère accu
+		if (accu.length() > 1) { //Si accu contient plus d'un élément dans sa chaine de caractère
+			accu = accu.substring(0,accu.length()-1); //On retire le dernier élément
 		}
-		else if (accu.length() == 1) {
-			accu = "0";
+		else if (accu.length() == 1) { //Si accu ne contient qu'un élément dans sa chaine de caractère
+			accu = "0"; //accu devient égale à 0
 		}
-		CG.changer_valeur(accu);
+		CG.changer_valeur(accu); //On modifie l'affichage
 	}
 
-	public void supprimer() {
-		accu = "0";
-		CG.changer_valeur(accu);
+	public void supprimer() { //Méthode permettant de supprimer toute la chaine de caractère accu
+		accu = "0"; //accu devient égale à 0
+		CG.changer_valeur(accu); //On modifie l'affichage
 	}
 
 }
