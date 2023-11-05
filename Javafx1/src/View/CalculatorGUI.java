@@ -2,7 +2,6 @@ package View;
 
 import Controler.CalculatorControler;
 import Model.CalculatorModel;
-import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -88,7 +87,7 @@ public class CalculatorGUI {
 		
 		Bouton bouton20 = new Bouton("Vider Pile", l, h, 80, 414);
 		
-		Bouton bouton21 = new Bouton("Invert elem", l, h, 171, 414);
+		Bouton bouton21 = new Bouton("Swap", l, h, 171, 414);
 		
 		Bouton bouton22 = new Bouton("Del elem", l, h, 262, 414);
 		
@@ -103,13 +102,17 @@ public class CalculatorGUI {
 
 	}
 
-	public void changer_affichage() {
-		if (CM.getAccu() != null) {
+	public void affiche() {
+		if ( CM.getAccu().matches(".*[-+*/].*") && !CM.getAccu().matches(".*\\d.*")) {
+			t3.setText(t1.getText());
+			t2.setText("" + CM.pop());
+		}
+		else if (CM.getAccu() != null) {
 			t3.setText(t2.getText());
 			t2.setText(t1.getText());
-			t1.setText("0");
-			CM.push();
 		}
+		t1.setText("0");
+		CM.push();
 	}
 
 	public void changer_valeur(String accu) {
