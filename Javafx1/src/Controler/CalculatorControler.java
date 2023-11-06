@@ -14,7 +14,8 @@ public class CalculatorControler implements CalculatorControlerInterface {
     }
     
     public void def_action_bouton(Bouton bouton1, Bouton bouton2, Bouton bouton3, Bouton bouton4, Bouton bouton5, Bouton bouton6, Bouton bouton7, Bouton bouton8, Bouton bouton9, Bouton bouton10, Bouton bouton11, Bouton bouton12, Bouton bouton13, Bouton bouton14, Bouton bouton15, Bouton bouton16, Bouton bouton17, Bouton bouton18, Bouton bouton19, Bouton bouton20, Bouton bouton21, Bouton bouton22, Bouton bouton23) {
-    	bouton1.setOnAction(e -> {CM.setAccu("1");});	
+    	//par la méthode setOnAction, on associe un clic sur le bouton à la fonctionnalité correspondante dans Model
+    	bouton1.setOnAction(e -> {CM.setAccu("1");});	//Les boutons 0 à 9 ajoute le chiffre à la fin de accu
 		bouton2.setOnAction(e -> {CM.setAccu("2");});
 		bouton3.setOnAction(e -> {CM.setAccu("3");});
 		bouton4.setOnAction(e -> {CM.setAccu("4");});
@@ -24,23 +25,41 @@ public class CalculatorControler implements CalculatorControlerInterface {
 		bouton8.setOnAction(e -> {CM.setAccu("8");});
 		bouton9.setOnAction(e -> {CM.setAccu("9");});
 		bouton10.setOnAction(e -> {CM.setAccu("0");});
-		bouton11.setOnAction(e -> {CG.affiche();});
-		bouton12.setOnAction(e -> {CM.setAccu(".");});
-		bouton13.setOnAction(e -> {CM.setAccu("+");
-								   CM.add();});
-		bouton14.setOnAction(e -> {CM.setAccu("-");
-								   CM.substract();});
-		bouton15.setOnAction(e -> {CM.setAccu("*");
-								   CM.multiply();});
-		bouton16.setOnAction(e -> {CM.setAccu("/");
-								   CM.divide();});
-		bouton17.setOnAction(e -> {CM.opposite();});
-		bouton18.setOnAction(e -> {CM.del();});
-		bouton19.setOnAction(e -> {CM.supprimer();});
-		bouton20.setOnAction(e -> {CM.clear();});
-		bouton21.setOnAction(e -> {CM.swap();});		
-		bouton22.setOnAction(e -> {CM.drop();});		
-		bouton23.setOnAction(e -> {CG.star();});
+		bouton11.setOnAction(e -> {CG.affiche();}); //Le bouton entrée fait appel à la fonction permettant de changer l'affichage
+		bouton12.setOnAction(e -> {CM.setAccu(".");}); //Le bouton 12 permet de mettre un "." pour représenter les nombres décimaux
+		bouton13.setOnAction(e -> {
+			if (CM.add()) {     //On commence par effectuer l'addition, si la fonction renvoie true
+			   CM.setAccu("+"); //Alors l'addition s'est effectuée et on remplace accu par l'opérateur +
+			   CG.affiche();}   //Afin que l'affichage soit modifié différemment lorsque accu est un opérateur plutot qu'un nombre
+			else {
+				CG.changer_valeur("Pas assez d'élément dans la pile");
+			}});
+													 //Mais également entre par rapport au cas où l'addition n'a pas pu s'effectuer
+		bouton14.setOnAction(e -> {if (CM.substract()) { //Cela fonctionne de la même manière pour les autres opérateurs
+								   CM.setAccu("-");
+								   CG.affiche();
+								   }
+								   else {
+										CG.changer_valeur("Pas assez d'élément dans la pile");
+									}});
+		bouton15.setOnAction(e -> { if (CM.multiply()) { //Cela fonctionne de la même manière pour les autres opérateurs
+			   							CM.setAccu("*");
+			   							CG.affiche();
+			   							}
+			   						else {
+			   							CG.changer_valeur("Pas assez d'élément dans la pile");
+			   						}});
+		bouton16.setOnAction(e -> {	if (CM.divide()) { //Cela fonctionne de la même manière pour les autres opérateurs
+										CM.setAccu("/");
+										CG.affiche();
+										}});
+		bouton17.setOnAction(e -> {CM.opposite();}); //Ce bouton permet de remplacer accu par son opposé
+		bouton18.setOnAction(e -> {CM.del();}); //Ce bouton permet d'enlever un caractère de la chaine accu
+		bouton19.setOnAction(e -> {CM.supprimer();}); //Ce bouton remplace accu par 0
+		bouton20.setOnAction(e -> {CM.clear();}); //Ce bouton permet de vider la pile
+		bouton21.setOnAction(e -> {CM.swap();}); //	Ce bouton permet d'intervertir les deux derniers éléments de la pile
+		bouton22.setOnAction(e -> {CM.drop();}); //Ce bouton supprime le dernier élément de la pile 
+		bouton23.setOnAction(e -> {CG.afficher_pile();}); //Ce bouton permet d'afficher la fenêtre affichant la pile
 		
     }
     

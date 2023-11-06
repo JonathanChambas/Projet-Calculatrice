@@ -1,10 +1,9 @@
 package View;
 
-import java.util.List;
-
 public interface CalculatorGUIInterface {
 
-	public String affiche();
-	public void change(List<Double> stackData);
+	public void affiche();
+	public void changer_valeur(String accu);
+	public void afficher_pile();
 
 }

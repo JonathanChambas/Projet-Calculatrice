@@ -2,10 +2,10 @@ package Model;
 
 public interface CalculatorModelInterface {
 
-	public void add();
-	public void substract();
-	public void multiply();
-	public void divide();
+	public boolean add();
+	public boolean substract();
+	public boolean multiply();
+	public boolean divide();
 	public void opposite();
 	public void push();
 	public double pop();

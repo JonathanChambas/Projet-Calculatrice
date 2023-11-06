@@ -35,82 +35,93 @@ public class CalculatorModel implements CalculatorModelInterface {
     }
 
 
-	public void add() {
+	public boolean add() {
 		if (memory.empty() == false) { //Si la pile n'est pas vide
 			double x = drop(); //On récupère le dernier élément de la pile
 			if (memory.empty() == false) { //Si elle n'est toujours pas vide après avoir retiré le dernier élément de la pile
 				double y = drop(); //On en récupère un deuxième
 				memory.push(x+y); //Et on met dans la pile le résultat
+				return true; //Les return true et false permettent de savoir quoi afficher sur la pile depuis le controler
 			}
 			else { //Si la pile ne possède qu'un élément
 				memory.push(x); //On le remet dans la pile
+				return false;
 			}
 		} 
 		else { //Si la pile ne possède pas d'élément
 			accu = "0"; //accu redevient égale à 0 au lieu d'être égal à l'opérateur
-			CG.changer_valeur("Pas de valeur dans la pile"); //On affiche sur la calculatrice que la pile ne contient pas de valeur
+			return false;
 		}
 	}
 
-	public void substract() {
+	public boolean substract() {
 		if (memory.empty() == false) { //De la même manière que pour l'addition
 			double x = drop();
 			if (memory.empty() == false) {
 				double y = drop();
 				memory.push(x-y); //On effectue la soustraction si la pile contient deux éléments
+				return true;
 			}
 			else { 
 				memory.push(x); //Si elle n'en contient qu'un, on le remet dans la pile
+				return false;
 			}
 		} 	
 		else {
 			accu = "0";; //Sinon, accu redevient égale à 0
-			CG.changer_valeur("Pas de valeur dans la pile"); //Et on affiche qu'il n'y a pas de valeur dans la pile
+			return false;
 		}
 	}
 
-	public void multiply() { //De la même manière pour la multiplication
+	public boolean multiply() { //De la même manière pour la multiplication
 		if (memory.empty() == false) {
 			double x = drop();
 			if (memory.empty() == false) {
 				double y = drop();
 				memory.push(x*y);
+				return true;
 			}
 			else { 
 				memory.push(x);
+				return false;
 			}
 		} 	
 		else {
 			accu = "0";
-			CG.changer_valeur("Pas de valeur dans la pile");
+			return false;
 		}
 	}
 
-	public void divide() { //De la même manière pour la division
-		if (memory.empty() == false) {
+	public boolean divide() { //De la même manière pour la division, sauf que les messages sont modifiés depuis le modèle (pour la division par 0 notamment)
+		if (memory.empty() == false) { 
 			double x = drop();
-			if (x == 0) { //Sauf si le premier élément qu'on retire de la pile est égale à 0
+			if (x == 0) { //Sauf si le premier élément qu'on retire de la pile est égal à 0
 				memory.push(x); //On remet le 0 dans la pile
-				accu = "0"; //accu redevient égale à 0 au lieu d'être égal à l'opérateur
+				accu = "0"; //accu redevient égal à 0 au lieu d'être égal à l'opérateur
 				CG.changer_valeur("Division par 0 interdite"); //On écrit sur la calculatrice que la division par 0 n'est pas possible
+				return false;
 			}
 			else if (memory.empty() == false) {
 				double y = drop();
 				memory.push(y/x);
+				return true;
 			}
 			else {
 				memory.push(x);
+				CG.changer_valeur("Pas assez d'élément dans la pile");
+				return false;
 			}
 		}
 		else {
 			accu = "0";
-			CG.changer_valeur("Pas de valeur dans la pile");
+			CG.changer_valeur("Pas assez d'élément dans la pile");
+			return false;
 		}
 	}
 
 	public void opposite() { 
 		if (accu.substring(0,1).equals("-")) { //On regarde si le premier élément du String accu est un "-"
-			accu = accu.substring(1, accu.length()); //Si c'est le cas, on garde tous les éléments qu compose le String accu sauf le "-"
+			accu = accu.substring(1, accu.length()); //Si c'est le cas, on garde tous les éléments qui composent le String accu sauf le "-"
 		}
 		else { //Sinon
 			accu = "-" + accu; //On ajoute un "-" devant accu
@@ -180,7 +191,7 @@ public class CalculatorModel implements CalculatorModelInterface {
 	}
 
 	public void supprimer() { //Méthode permettant de supprimer toute la chaine de caractère accu
-		accu = "0"; //accu devient égale à 0
+		accu = "0"; //accu devient égal à 0
 		CG.changer_valeur(accu); //On modifie l'affichage
 	}
 
