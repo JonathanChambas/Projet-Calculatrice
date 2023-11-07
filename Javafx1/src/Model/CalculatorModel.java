@@ -131,7 +131,7 @@ public class CalculatorModel implements CalculatorModelInterface {
 
 	public void push() { 
 		if (accu.matches(".*[-+*/].*") && !accu.matches(".*\\d.*") ) { //Si accu contient des opérateurs dans son expression
-			accu = "0"; //Accu devient égal au dernier élément de la pile (c'est-à-dire le résultat des opérations effectuées)
+			accu = "0"; //Accu devient égal à 0 (permet d'empêcher une erreur sur la console)
 		}
 		else if (accu.equals(".")) { //Si accu ne contient qu'un .
 			memory.push(0.); //On push 0 dans la pile
