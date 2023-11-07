@@ -126,7 +126,6 @@ public class CalculatorGUI implements CalculatorGUIInterface {
 			t2.setText(t1.getText()); //La seconde celle de la première
 		}
 		t1.setText("0"); //On affiche 0 sur la première barre de texte
-		CM.push(); //accu est alors rentré dans la pile avec la méthode push 
 	}
 
 	public void changer_valeur(String accu) { //Cette méthode permet notamment d'afficher les messages d'erreur sur la calculatrice

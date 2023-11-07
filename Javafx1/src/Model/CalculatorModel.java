@@ -131,11 +131,14 @@ public class CalculatorModel implements CalculatorModelInterface {
 
 	public void push() { 
 		if (accu.matches(".*[-+*/].*") && !accu.matches(".*\\d.*") ) { //Si accu contient des opérateurs dans son expression
-			accu = "" + pop(); //Accu devient égal au dernier élément de la pile (c'est-à-dire le résultat des opérations effectuées)
+			accu = "0"; //Accu devient égal au dernier élément de la pile (c'est-à-dire le résultat des opérations effectuées)
 		}
 		else if (accu.equals(".")) { //Si accu ne contient qu'un .
 			memory.push(0.); //On push 0 dans la pile
 		}
+		else if (accu.matches("\\d*[-+*/]+")) {//Dans le cas où on appuierait sur des chiffres puis un opérateur sans avoir push le nombre dans la pile
+			accu = "0";//On appliquerait l'opération au lieu d'obtenir une erreur sur la console
+		} 
 		else { //Sinon
 			memory.push(Double.valueOf(accu)); //On push la valeur de accu dans la pile une fois convertie en double
 		}

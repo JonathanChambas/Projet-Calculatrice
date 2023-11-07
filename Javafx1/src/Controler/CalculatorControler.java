@@ -25,19 +25,24 @@ public class CalculatorControler implements CalculatorControlerInterface {
 		bouton8.setOnAction(e -> {CM.setAccu("8");});
 		bouton9.setOnAction(e -> {CM.setAccu("9");});
 		bouton10.setOnAction(e -> {CM.setAccu("0");});
-		bouton11.setOnAction(e -> {CG.affiche();}); //Le bouton entrée fait appel à la fonction permettant de changer l'affichage
+		bouton11.setOnAction(e -> {CG.affiche();//Le bouton entrée fait appel à la fonction permettant de changer l'affichage
+								   CM.push();});  //accu est alors rentré dans la pile avec la méthode push 
+		 
 		bouton12.setOnAction(e -> {CM.setAccu(".");}); //Le bouton 12 permet de mettre un "." pour représenter les nombres décimaux
 		bouton13.setOnAction(e -> {
 			if (CM.add()) {     //On commence par effectuer l'addition, si la fonction renvoie true
 			   CM.setAccu("+"); //Alors l'addition s'est effectuée et on remplace accu par l'opérateur +
-			   CG.affiche();}   //Afin que l'affichage soit modifié différemment lorsque accu est un opérateur plutot qu'un nombre
+			   CG.affiche();//Afin que l'affichage soit modifié différemment lorsque accu est un opérateur plutot qu'un nombre
+			   CM.push();}    //accu est alors rentré dans la pile
 			else {
 				CG.changer_valeur("Pas assez d'élément dans la pile");
+				CM.push();
 			}});
 													 //Mais également entre par rapport au cas où l'addition n'a pas pu s'effectuer
 		bouton14.setOnAction(e -> {if (CM.substract()) { //Cela fonctionne de la même manière pour les autres opérateurs
 								   CM.setAccu("-");
 								   CG.affiche();
+								   CM.push();
 								   }
 								   else {
 										CG.changer_valeur("Pas assez d'élément dans la pile");
@@ -45,6 +50,7 @@ public class CalculatorControler implements CalculatorControlerInterface {
 		bouton15.setOnAction(e -> { if (CM.multiply()) { //Cela fonctionne de la même manière pour les autres opérateurs
 			   							CM.setAccu("*");
 			   							CG.affiche();
+			   							CM.push();
 			   							}
 			   						else {
 			   							CG.changer_valeur("Pas assez d'élément dans la pile");
@@ -52,6 +58,7 @@ public class CalculatorControler implements CalculatorControlerInterface {
 		bouton16.setOnAction(e -> {	if (CM.divide()) { //Cela fonctionne de la même manière pour les autres opérateurs
 										CM.setAccu("/");
 										CG.affiche();
+										CM.push();
 										}});
 		bouton17.setOnAction(e -> {CM.opposite();}); //Ce bouton permet de remplacer accu par son opposé
 		bouton18.setOnAction(e -> {CM.del();}); //Ce bouton permet d'enlever un caractère de la chaine accu
